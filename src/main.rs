@@ -3,9 +3,12 @@ use btleplug::platform::{Adapter, Manager, Peripheral};
 use std::error::Error;
 use std::time::Duration;
 use tokio::time;
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    // PM5 service UUIDS from https://www.c2forum.com/viewtopic.php?f=15&t=81699&p=295721&hilit=uuid#p284373
+
     println!("Constructing new manager...");
     let manager = Manager::new().await.unwrap();
 
@@ -29,10 +32,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         pm5.connect().await?;
         println!("Connected.");
         pm5.discover_services().await?;
-        let chars = pm5.characteristics();
-        println!("Found {:?} services", chars.len());
-        for char in chars.iter() {
-            println!("UUID found: {:?}", char.uuid);
+        let services = pm5.services();
+        println!("Found {:?} services", services.len());
+        for service in services.iter() {
+            println!("UUID found: {:?}", service.uuid);
         }
 
         pm5.disconnect().await?;
