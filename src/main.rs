@@ -38,8 +38,12 @@ async fn find_pm5(central: &Adapter) -> Option<Peripheral> {
     dbg!(central.peripherals().await.unwrap().len());
     for p in central.peripherals().await.unwrap() {
         let props = p.properties().await;
-        if props.unwrap().unwrap().local_name.unwrap().contains("PM5") {
-            return Some(p);
+        let name = props.unwrap().unwrap().local_name;
+        if let Some(s) = name.as_ref() {
+            println!("Found device with name {:?}", s);
+            if s.contains("PM5") {
+                return Some(p);
+            }
         }
     }
 
