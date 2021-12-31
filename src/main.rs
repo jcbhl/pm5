@@ -18,15 +18,22 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!("Beginning scan...");
     central.start_scan(ScanFilter::default()).await?;
 
+    //TODO poll stream rather than sleep
     println!("Sleeping for 2 seconds.");
     time::sleep(Duration::from_secs(3)).await;
 
     println!("Waking. Searching found devices...");
-    let pm5 = find_pm5(&central).await;
 
-    if pm5.is_some() {
+    if let Some(pm5) = find_pm5(&central).await {
         println!("Found pm5!");
-        return Ok(());
+        pm5.connect().await?;
+        println!("Connected.");
+        pm5.discover_services().await?;
+        let chars = pm5.characteristics();
+        println!("Found {:?} services", chars.len());
+        for char in chars.iter() {
+            println!("UUID found: {:?}", char.uuid);
+        }
     } else {
         println!("Did not find pm5...");
     }
@@ -35,7 +42,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 
 async fn find_pm5(central: &Adapter) -> Option<Peripheral> {
-    dbg!(central.peripherals().await.unwrap().len());
     for p in central.peripherals().await.unwrap() {
         let props = p.properties().await;
         let name = props.unwrap().unwrap().local_name;
