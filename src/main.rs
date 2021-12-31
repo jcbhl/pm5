@@ -34,6 +34,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         for char in chars.iter() {
             println!("UUID found: {:?}", char.uuid);
         }
+
+        pm5.disconnect().await?;
     } else {
         println!("Did not find pm5...");
     }
