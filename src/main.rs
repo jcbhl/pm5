@@ -8,6 +8,10 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // PM5 service UUIDS from https://www.c2forum.com/viewtopic.php?f=15&t=81699&p=295721&hilit=uuid#p284373
+    // FIXME constexprs
+    let _deviceinfo_uuid = Uuid::parse_str("CE060010-43E5-11E4-916C-0800200C9A66").unwrap();
+    let _controlservice_uuid = Uuid::parse_str("CE060020-43E5-11E4-916C-0800200C9A66").unwrap();
+    let _rowingservice_uuid = Uuid::parse_str("CE060030-43E5-11E4-916C-0800200C9A66").unwrap();
 
     println!("Constructing new manager...");
     let manager = Manager::new().await.unwrap();
@@ -37,6 +41,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
         for service in services.iter() {
             println!("UUID found: {:?}", service.uuid);
         }
+
+        // Check that we found 3 of the main PM5 services
+        assert!(services.iter().any(|s| s.uuid == _deviceinfo_uuid));
+        assert!(services.iter().any(|s| s.uuid == _controlservice_uuid));
+        assert!(services.iter().any(|s| s.uuid == _rowingservice_uuid));
+        println!("All required services found.");
 
         pm5.disconnect().await?;
     } else {
