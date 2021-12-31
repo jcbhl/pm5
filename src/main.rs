@@ -48,6 +48,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
         assert!(services.iter().any(|s| s.uuid == _rowingservice_uuid));
         println!("All required services found.");
 
+        let rowing_service = services
+            .iter()
+            .find(|s| s.uuid == _rowingservice_uuid)
+            .unwrap();
+        for char in rowing_service.characteristics.iter() {
+            println!("Rowing service has characteristic: {:?}", char.uuid);
+        }
+
         pm5.disconnect().await?;
     } else {
         println!("Did not find pm5...");
