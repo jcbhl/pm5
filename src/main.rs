@@ -13,6 +13,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let _controlservice_uuid = Uuid::parse_str("CE060020-43E5-11E4-916C-0800200C9A66").unwrap();
     let _rowingservice_uuid = Uuid::parse_str("CE060030-43E5-11E4-916C-0800200C9A66").unwrap();
 
+    let _rowingstatus_characteristic_uuid =
+        Uuid::parse_str("ce060031-43e5-11e4-916c-0800200c9a66").unwrap();
+
     println!("Constructing new manager...");
     let manager = Manager::new().await.unwrap();
 
@@ -37,10 +40,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         println!("Connected.");
         pm5.discover_services().await?;
         let services = pm5.services();
-        println!("Found {:?} services", services.len());
-        for service in services.iter() {
-            println!("UUID found: {:?}", service.uuid);
-        }
 
         // Check that we found 3 of the main PM5 services
         assert!(services.iter().any(|s| s.uuid == _deviceinfo_uuid));
@@ -52,8 +51,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .iter()
             .find(|s| s.uuid == _rowingservice_uuid)
             .unwrap();
-        for char in rowing_service.characteristics.iter() {
-            println!("Rowing service has characteristic: {:?}", char.uuid);
+
+        let rowing_status_char = rowing_service
+            .characteristics
+            .iter()
+            .find(|c| c.uuid == _rowingstatus_characteristic_uuid)
+            .unwrap();
+
+        for _ in 0..60 {
+            let response = pm5.read(&rowing_status_char).await?;
+
+            dbg!(response);
+
+            time::sleep(Duration::from_secs(1)).await;
         }
 
         pm5.disconnect().await?;
