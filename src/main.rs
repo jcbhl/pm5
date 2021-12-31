@@ -61,7 +61,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         for _ in 0..60 {
             let response = pm5.read(&rowing_status_char).await?;
 
-            dbg!(response);
+            println!("{}, {}, {}", response[3], response[4], response[5]);
 
             time::sleep(Duration::from_secs(1)).await;
         }
