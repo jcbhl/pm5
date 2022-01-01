@@ -58,10 +58,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .find(|c| c.uuid == _rowingstatus_characteristic_uuid)
             .unwrap();
 
+        let mut last_response: Vec<u8>;
+        let mut current_response: Vec<u8> = Vec::new();
         for _ in 0..60 {
-            let response = pm5.read(&rowing_status_char).await?;
+            last_response = current_response;
+            current_response = pm5.read(&rowing_status_char).await?;
 
-            println!("{}, {}, {}", response[3], response[4], response[5]);
+            for idx in 0..last_response.len() {
+                if last_response[idx] != current_response[idx] {
+                    println!(
+                        "DIFF found at index {}: {} vs {}",
+                        idx, last_response[idx], current_response[idx]
+                    );
+                }
+            }
 
             time::sleep(Duration::from_secs(1)).await;
         }
