@@ -13,11 +13,11 @@ pub mod responses;
 async fn main() -> Result<(), Box<dyn Error>> {
     // PM5 service UUIDS from https://www.c2forum.com/viewtopic.php?f=15&t=81699&p=295721&hilit=uuid#p284373
     // FIXME constexprs
-    let _deviceinfo_uuid = Uuid::parse_str("CE060010-43E5-11E4-916C-0800200C9A66").unwrap();
-    let _controlservice_uuid = Uuid::parse_str("CE060020-43E5-11E4-916C-0800200C9A66").unwrap();
-    let _rowingservice_uuid = Uuid::parse_str("CE060030-43E5-11E4-916C-0800200C9A66").unwrap();
+    let deviceinfo_uuid = Uuid::parse_str("CE060010-43E5-11E4-916C-0800200C9A66").unwrap();
+    let controlservice_uuid = Uuid::parse_str("CE060020-43E5-11E4-916C-0800200C9A66").unwrap();
+    let rowingservice_uuid = Uuid::parse_str("CE060030-43E5-11E4-916C-0800200C9A66").unwrap();
 
-    let _rowingstatus_characteristic_uuid =
+    let rowingstatus_characteristic_uuid =
         Uuid::parse_str("ce060031-43e5-11e4-916c-0800200c9a66").unwrap();
 
     println!("Constructing new manager...");
@@ -46,20 +46,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
         let services = pm5.services();
 
         // Check that we found 3 of the main PM5 services
-        assert!(services.iter().any(|s| s.uuid == _deviceinfo_uuid));
-        assert!(services.iter().any(|s| s.uuid == _controlservice_uuid));
-        assert!(services.iter().any(|s| s.uuid == _rowingservice_uuid));
+        assert!(services.iter().any(|s| s.uuid == deviceinfo_uuid));
+        assert!(services.iter().any(|s| s.uuid == controlservice_uuid));
+        assert!(services.iter().any(|s| s.uuid == rowingservice_uuid));
         println!("All required services found.");
 
         let rowing_service = services
             .iter()
-            .find(|s| s.uuid == _rowingservice_uuid)
+            .find(|s| s.uuid == rowingservice_uuid)
             .unwrap();
 
         let rowing_status_char = rowing_service
             .characteristics
             .iter()
-            .find(|c| c.uuid == _rowingstatus_characteristic_uuid)
+            .find(|c| c.uuid == rowingstatus_characteristic_uuid)
             .unwrap();
 
         println!("Subscribing to rowing characteristic...");
