@@ -5,7 +5,9 @@ use std::time::Duration;
 use tokio::time;
 use uuid::Uuid;
 
-mod enums;
+pub mod enums;
+pub mod helpers;
+pub mod responses;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

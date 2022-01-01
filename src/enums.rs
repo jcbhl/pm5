@@ -100,7 +100,7 @@ pub enum StrokeState {
 
 #[repr(C)]
 #[allow(dead_code)]
-pub enum DurationType {
+pub enum WorkoutDurationType {
     Time = 0,
     Calories = 0x40,
     Distance = 0x80,
@@ -110,10 +110,10 @@ pub enum DurationType {
 #[repr(C)]
 #[allow(dead_code)]
 pub enum GameID {
-  None,
-  Fish,
-  Dart,
-  TargetBasic,
-  TargetAdvanced,
-  Crosstraining,
+    None,
+    Fish,
+    Dart,
+    TargetBasic,
+    TargetAdvanced,
+    Crosstraining,
 }
