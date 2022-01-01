@@ -5,6 +5,8 @@ use std::time::Duration;
 use tokio::time;
 use uuid::Uuid;
 
+mod enums;
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     // PM5 service UUIDS from https://www.c2forum.com/viewtopic.php?f=15&t=81699&p=295721&hilit=uuid#p284373
@@ -64,12 +66,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
         for _ in 0..60 {
             let response = pm5.read(rowing_status_char).await?;
-
-            print!("Response: ");
-            for byte in response {
-                print!("{:X?} ", byte);
-            }
-            println!();
 
             time::sleep(Duration::from_secs(1)).await;
         }
