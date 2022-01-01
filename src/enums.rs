@@ -1,3 +1,4 @@
+#[derive(Debug)]
 #[repr(C)]
 #[allow(dead_code)]
 pub enum ErgType {
@@ -29,6 +30,7 @@ pub enum ErgType {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum WorkoutType {
     JustRowNoSplits,
     JustRowSplits,
@@ -48,6 +50,7 @@ pub enum WorkoutType {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum IntervalType {
     Time,
     Dist,
@@ -64,6 +67,7 @@ pub enum IntervalType {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum WorkoutState {
     WaitToBegin,
     WorkoutRow,
@@ -83,6 +87,7 @@ pub enum WorkoutState {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum RowingState {
     Inactive,
     Active,
@@ -90,6 +95,7 @@ pub enum RowingState {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum StrokeState {
     WaitingForWheelToReachMinSpeedState,
     WaitingForWheelToAccelerateState,
@@ -100,6 +106,7 @@ pub enum StrokeState {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum WorkoutDurationType {
     Time = 0,
     Calories = 0x40,
@@ -109,6 +116,7 @@ pub enum WorkoutDurationType {
 
 #[repr(C)]
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum GameID {
     None,
     Fish,
