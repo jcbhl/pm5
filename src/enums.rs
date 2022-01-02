@@ -1,5 +1,9 @@
-#[derive(Debug)]
-#[repr(C)]
+use num_enum::TryFromPrimitive;
+
+// TODO consider repr C if crossing the ffi boundary
+
+#[derive(Debug, TryFromPrimitive, PartialEq)]
+#[repr(u8)]
 #[allow(dead_code)]
 pub enum ErgType {
     StaticD,
@@ -28,9 +32,9 @@ pub enum ErgType {
     Num,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum WorkoutType {
     JustRowNoSplits,
     JustRowSplits,
@@ -48,9 +52,9 @@ pub enum WorkoutType {
     Num,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum IntervalType {
     Time,
     Dist,
@@ -65,9 +69,9 @@ pub enum IntervalType {
     None = 255,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum WorkoutState {
     WaitToBegin,
     WorkoutRow,
@@ -85,17 +89,17 @@ pub enum WorkoutState {
     Rearm,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum RowingState {
     Inactive,
     Active,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum StrokeState {
     WaitingForWheelToReachMinSpeedState,
     WaitingForWheelToAccelerateState,
@@ -104,9 +108,9 @@ pub enum StrokeState {
     RecoveryState,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum WorkoutDurationType {
     Time = 0,
     Calories = 0x40,
@@ -114,9 +118,9 @@ pub enum WorkoutDurationType {
     Watts = 0xC0,
 }
 
-#[repr(C)]
+#[repr(u8)]
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, TryFromPrimitive, PartialEq)]
 pub enum GameID {
     None,
     Fish,
