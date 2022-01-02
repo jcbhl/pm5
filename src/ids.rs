@@ -18,4 +18,7 @@ pub mod chars {
 
     pub static ROWING_GENERAL: SyncLazy<Uuid> =
         SyncLazy::new(|| Uuid::parse_str("ce060031-43e5-11e4-916c-0800200c9a66").unwrap());
+
+    pub static FORCECURVE: SyncLazy<Uuid> =
+        SyncLazy::new(|| Uuid::parse_str("CE06003D-43E5-11E4-916C-0800200C9A66").unwrap());
 }
