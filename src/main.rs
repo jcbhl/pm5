@@ -15,7 +15,6 @@ pub mod responses;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // PM5 service UUIDS from https://www.c2forum.com/viewtopic.php?f=15&t=81699&p=295721&hilit=uuid#p284373
     println!("Constructing new manager...");
     let manager = Manager::new().await.unwrap();
 

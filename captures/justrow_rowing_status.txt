@@ -1,0 +1,66 @@
+Constructing new manager...
+Constructing adapters...
+Constructing central adapter...
+Beginning scan...
+Sleeping for 2 seconds.
+Waking. Searching found devices...
+Found device with name "PM5 430592131"
+Found pm5!
+Connected.
+All required services found.
+Subscribing to rowing characteristic...
+Subscription done.
+Response: AB 5A 14 78 65 69 F3 2F 59 CC E 83 8C B6 71 73 5E 25 61 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 3 1 0 0 0 0 0 0 F4 1 0 80 0 
+Response: 0 0 0 0 0 0 3 1 0 0 0 0 0 0 F4 1 0 80 0 
+Response: 33 0 0 D 0 0 3 1 0 0 2 0 0 0 F4 1 0 80 0 
+Response: 99 0 0 36 0 0 3 1 1 1 4 0 0 0 F4 1 0 80 0 
+Response: FD 0 0 5A 0 0 3 1 1 1 4 0 0 0 F4 1 0 80 0 
+Response: 64 1 0 87 0 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: FA 1 0 C3 0 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 61 2 0 F2 0 0 3 1 1 1 4 0 0 0 F4 1 0 80 79 
+Response: C4 2 0 1D 1 0 3 1 1 1 4 0 0 0 F4 1 0 80 79 
+Response: 28 3 0 44 1 0 3 1 1 1 2 0 0 0 F4 1 0 80 79 
+Response: 8E 3 0 74 1 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: F0 3 0 9D 1 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 58 4 0 C8 1 0 3 1 1 1 2 0 0 0 F4 1 0 80 78 
+Response: BC 4 0 F7 1 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 20 5 0 20 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 87 5 0 4E 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: EA 5 0 7A 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 4D 6 0 A1 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: B0 6 0 C3 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 15 7 0 E2 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: 79 7 0 FE 2 0 3 1 1 1 4 0 0 0 F4 1 0 80 78 
+Response: DA 7 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 41 8 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: D4 8 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 38 9 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 9C 9 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: FD 9 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 61 A 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: C5 A 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 2C B 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 90 B 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: F4 B 0 11 3 0 3 1 1 0 1 0 0 0 F4 1 0 80 78 
+Response: 55 C 0 11 3 0 3 1 B 0 1 0 0 0 F4 1 0 80 78 
+Response: 55 C 0 11 3 0 3 1 B 0 1 0 0 0 F4 1 0 80 78 
+Response: 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 
+Response: 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 80 0 

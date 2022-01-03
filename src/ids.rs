@@ -1,6 +1,7 @@
 use std::lazy::SyncLazy;
 use uuid::Uuid;
 
+// PM5 service UUIDS from https://www.c2forum.com/viewtopic.php?f=15&t=81699&p=295721&hilit=uuid#p284373
 pub mod services {
     use super::*;
 
