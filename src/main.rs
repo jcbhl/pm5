@@ -116,7 +116,7 @@ async fn sub_rowing_status(
     let rowing_status_char = rowing_service
         .characteristics
         .iter()
-        .find(|c| c.uuid == *ids::chars::ROWING_GENERAL)
+        .find(|c| c.uuid == *ids::chars::GENERAL_STATUS)
         .unwrap();
 
     println!("Subscribing to rowing characteristic...");

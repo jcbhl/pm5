@@ -72,6 +72,17 @@ impl AdditionalStatus1 {
     }
 }
 
+#[allow(dead_code)]
+struct SampleRate(u8);
+impl SampleRate {
+    pub fn from_bytes(b: &[u8]) -> Result<SampleRate, Box<dyn Error>> {
+        if (b.len() != 1) {
+            return Err("Length does not match".into());
+        }
+        Ok(SampleRate { 0: b[0] })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
