@@ -3,10 +3,9 @@ use super::helpers::*;
 use std::error::Error;
 use std::time::Duration;
 
-pub struct RowingStatusResponse {
+pub struct GeneralStatus {
     pub elapsed_time: Duration,
-    // tenths of meters
-    pub distance: u32,
+    pub distance: u32, // tenths of meters
     pub workout_type: WorkoutType,
     pub interval_type: IntervalType,
     pub workout_state: WorkoutState,
@@ -14,17 +13,17 @@ pub struct RowingStatusResponse {
     pub stroke_state: StrokeState,
     pub total_distance: u32,
     pub workout_duration: Duration,
-    pub workoutduration_type: WorkoutDurationType,
+    pub workout_duration_type: WorkoutDurationType,
     pub drag_factor: u8,
 }
 
-impl RowingStatusResponse {
-    pub fn from_bytes(b: &[u8]) -> Result<RowingStatusResponse, Box<dyn Error>> {
+impl GeneralStatus {
+    pub fn from_bytes(b: &[u8]) -> Result<GeneralStatus, Box<dyn Error>> {
         if b.len() != 19 {
             return Err("Length does not match".into());
         }
 
-        Ok(RowingStatusResponse {
+        Ok(GeneralStatus {
             elapsed_time: decode_to_time(b[0], b[1], b[2]),
             distance: decode_to_distance(b[3], b[4], b[5]),
             workout_type: WorkoutType::try_from(b[6])?,
@@ -34,13 +33,13 @@ impl RowingStatusResponse {
             stroke_state: StrokeState::try_from(b[10])?,
             total_distance: decode_to_distance(b[11], b[12], b[13]), // this might have different units? FIXME
             workout_duration: decode_to_time(b[14], b[15], b[16]),
-            workoutduration_type: WorkoutDurationType::try_from(b[17])?,
+            workout_duration_type: WorkoutDurationType::try_from(b[17])?,
             drag_factor: b[18],
         })
     }
 }
 
-pub struct RowingAdditionalStatus1Response {
+pub struct AdditionalStatus1 {
     pub elapsed_time: Duration,
     pub speed: u16,
     pub spm: u8,
@@ -52,14 +51,14 @@ pub struct RowingAdditionalStatus1Response {
     pub erg_type: ErgType,
 }
 
-impl RowingAdditionalStatus1Response {
+impl AdditionalStatus1 {
     //FIXME test this
-    pub fn from_bytes(b: &[u8]) -> Result<RowingAdditionalStatus1Response, Box<dyn Error>> {
+    pub fn from_bytes(b: &[u8]) -> Result<AdditionalStatus1, Box<dyn Error>> {
         if b.len() != 17 {
             return Err("Length does not match".into());
         }
 
-        Ok(RowingAdditionalStatus1Response {
+        Ok(AdditionalStatus1 {
             elapsed_time: decode_to_time(b[0], b[1], b[2]),
             speed: decode_pair(b[3], b[4]),
             spm: b[5],
@@ -77,13 +76,13 @@ impl RowingAdditionalStatus1Response {
 mod tests {
     use super::*;
     #[test]
-    fn rowing_status_parse() {
+    fn general_status_parse() {
         let data = [
             0x5F, 0x06, 0x00, 0x5C, 0x01, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x80, 0x6A,
         ];
 
-        let parsed = RowingStatusResponse::from_bytes(&data).unwrap();
+        let parsed = GeneralStatus::from_bytes(&data).unwrap();
         assert_eq!(parsed.workout_type, WorkoutType::JustRowSplits);
         assert_eq!(parsed.workout_state, WorkoutState::WorkoutRow);
         assert_eq!(parsed.rowing_state, RowingState::Inactive);
@@ -94,22 +93,22 @@ mod tests {
     }
 
     #[test]
-    fn rowing_status_wrong_len() {
+    fn general_status_wrong_len() {
         let data = [
             0x5F, 0x06, 0x00, 0x5C, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x80, 0x6A,
         ];
 
-        assert!(RowingStatusResponse::from_bytes(&data).is_err());
+        assert!(GeneralStatus::from_bytes(&data).is_err());
     }
 
     #[test]
-    fn rowing_status_invalid_enum() {
+    fn general_status_invalid_enum() {
         let data = [
             0x5F, 0x06, 0x00, 0x5C, 0x01, 0x00, 0x42, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00,
             0x00, 0x00, 0x00, 0x80, 0x6A,
         ];
 
-        assert!(RowingStatusResponse::from_bytes(&data).is_err());
+        assert!(GeneralStatus::from_bytes(&data).is_err());
     }
 }

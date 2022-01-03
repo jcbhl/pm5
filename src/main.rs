@@ -127,7 +127,7 @@ async fn sub_rowing_status(
         let response = pm5.read(rowing_status_char).await?;
         let response_time = std::time::Instant::now();
 
-        let _parsed = responses::RowingStatusResponse::from_bytes(&response);
+        let _parsed = responses::GeneralStatus::from_bytes(&response);
 
         {
             print!("{:?} |||| [", response_time);
