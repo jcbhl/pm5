@@ -1,7 +1,6 @@
 use std::time::Duration;
 
 pub fn decode_to_time(lo: u8, mid: u8, hi: u8) -> Duration {
-    // TODO test tenths of secs as well
     let hundreths_of_secs = u32::from_le_bytes([lo, mid, hi, 0x00]);
     Duration::from_millis((hundreths_of_secs as u64) * 10)
 }
@@ -18,6 +17,13 @@ pub fn decode_to_distance(lo: u8, mid: u8, hi: u8) -> u32 {
 fn test_basic_time() {
     let res = decode_to_time(0x5f, 0x06, 0x00);
     assert_eq!(res.as_secs(), 16);
+}
+
+#[test]
+fn test_1min_time() {
+    let res = decode_to_time(0x70, 0x17, 0x00);
+    assert_eq!(res.as_secs(), 60);
+    assert_eq!(res.subsec_millis(), 0);
 }
 
 #[test]
