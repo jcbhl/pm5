@@ -15,27 +15,30 @@ pub fn decode_pair(lo: u8, hi: u8) -> u16 {
     u16::from_le_bytes([lo, hi])
 }
 
-// --- tests ---
+#[cfg(test)]
+mod test {
+    use super::*;
 
-#[test]
-fn test_basic_time() {
-    let res = decode_to_time(0x5f, 0x06, 0x00);
-    assert_eq!(res.as_secs(), 16);
+    #[test]
+    fn test_basic_time() {
+        let res = decode_to_time(0x5f, 0x06, 0x00);
+        assert_eq!(res.as_secs(), 16);
+    }
+
+    #[test]
+    fn test_1min_time() {
+        let res = decode_to_time(0x70, 0x17, 0x00);
+        assert_eq!(res.as_secs(), 60);
+        assert_eq!(res.subsec_millis(), 0);
+    }
+
+    #[test]
+    fn test_basic_meters() {
+        let res = decode_to_distance(0x5c, 0x01, 0x00);
+        assert_eq!(res, 348);
+    }
+
+    // 0x0031 response
+    //           time    dist    workout type   interval type   workout state  rowing state    stroke state    total distance   workout duration   duration type   drag factor
+    //          5F 6 0 | 5C 1 0 |  1           |  1           |  1            |  0           | 1             | 0 0 0          |  0 0 0           | 80            | 6A
 }
-
-#[test]
-fn test_1min_time() {
-    let res = decode_to_time(0x70, 0x17, 0x00);
-    assert_eq!(res.as_secs(), 60);
-    assert_eq!(res.subsec_millis(), 0);
-}
-
-#[test]
-fn test_basic_meters() {
-    let res = decode_to_distance(0x5c, 0x01, 0x00);
-    assert_eq!(res, 348);
-}
-
-// 0x0031 response
-//           time    dist    workout type   interval type   workout state  rowing state    stroke state    total distance   workout duration   duration type   drag factor
-//          5F 6 0 | 5C 1 0 |  1           |  1           |  1            |  0           | 1             | 0 0 0          |  0 0 0           | 80            | 6A

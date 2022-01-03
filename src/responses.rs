@@ -76,7 +76,7 @@ impl AdditionalStatus1 {
 struct SampleRate(u8);
 impl SampleRate {
     pub fn from_bytes(b: &[u8]) -> Result<SampleRate, Box<dyn Error>> {
-        if (b.len() != 1) {
+        if b.len() != 1 {
             return Err("Length does not match".into());
         }
         Ok(SampleRate { 0: b[0] })
@@ -84,7 +84,7 @@ impl SampleRate {
 }
 
 #[cfg(test)]
-mod tests {
+mod test {
     use super::*;
     #[test]
     fn general_status_parse() {
