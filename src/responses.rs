@@ -40,39 +40,76 @@ impl RowingStatusResponse {
     }
 }
 
-#[test]
-fn test_rowing_status_parse() {
-    let data = [
-        0x5F, 0x06, 0x00, 0x5C, 0x01, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x80, 0x6A,
-    ];
-
-    let parsed = RowingStatusResponse::from_bytes(&data).unwrap();
-    assert_eq!(parsed.workout_type, WorkoutType::JustRowSplits);
-    assert_eq!(parsed.workout_state, WorkoutState::WorkoutRow);
-    assert_eq!(parsed.rowing_state, RowingState::Inactive);
-    assert_eq!(
-        parsed.stroke_state,
-        StrokeState::WaitingForWheelToAccelerateState
-    );
+pub struct RowingAdditionalStatus1Response {
+    pub elapsed_time: Duration,
+    pub speed: u16,
+    pub spm: u8,
+    pub hr: u8, // invalid at 255
+    pub current_pace: u16,
+    pub average_pace: u16,
+    pub rest_distance: u16,
+    pub rest_time: Duration,
+    pub erg_type: ErgType,
 }
 
-#[test]
-fn test_rowing_status_wrong_len() {
-    let data = [
-        0x5F, 0x06, 0x00, 0x5C, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x80, 0x6A,
-    ];
+impl RowingAdditionalStatus1Response {
+    //FIXME test this
+    pub fn from_bytes(b: &[u8]) -> Result<RowingAdditionalStatus1Response, Box<dyn Error>> {
+        if b.len() != 17 {
+            return Err("Length does not match".into());
+        }
 
-    assert!(RowingStatusResponse::from_bytes(&data).is_err());
+        Ok(RowingAdditionalStatus1Response {
+            elapsed_time: decode_to_time(b[0], b[1], b[2]),
+            speed: decode_pair(b[3], b[4]),
+            spm: b[5],
+            hr: b[6],
+            current_pace: decode_pair(b[7], b[8]),
+            average_pace: decode_pair(b[9], b[10]),
+            rest_distance: decode_pair(b[11], b[12]),
+            rest_time: decode_to_time(b[13], b[14], b[15]),
+            erg_type: ErgType::try_from(b[16])?,
+        })
+    }
 }
 
-#[test]
-fn test_rowing_status_invalid_enum() {
-    let data = [
-        0x5F, 0x06, 0x00, 0x5C, 0x01, 0x00, 0x42, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x80, 0x6A,
-    ];
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn rowing_status_parse() {
+        let data = [
+            0x5F, 0x06, 0x00, 0x5C, 0x01, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x80, 0x6A,
+        ];
 
-    assert!(RowingStatusResponse::from_bytes(&data).is_err());
+        let parsed = RowingStatusResponse::from_bytes(&data).unwrap();
+        assert_eq!(parsed.workout_type, WorkoutType::JustRowSplits);
+        assert_eq!(parsed.workout_state, WorkoutState::WorkoutRow);
+        assert_eq!(parsed.rowing_state, RowingState::Inactive);
+        assert_eq!(
+            parsed.stroke_state,
+            StrokeState::WaitingForWheelToAccelerateState
+        );
+    }
+
+    #[test]
+    fn rowing_status_wrong_len() {
+        let data = [
+            0x5F, 0x06, 0x00, 0x5C, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x80, 0x6A,
+        ];
+
+        assert!(RowingStatusResponse::from_bytes(&data).is_err());
+    }
+
+    #[test]
+    fn rowing_status_invalid_enum() {
+        let data = [
+            0x5F, 0x06, 0x00, 0x5C, 0x01, 0x00, 0x42, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x80, 0x6A,
+        ];
+
+        assert!(RowingStatusResponse::from_bytes(&data).is_err());
+    }
 }

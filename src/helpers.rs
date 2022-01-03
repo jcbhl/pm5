@@ -11,6 +11,10 @@ pub fn decode_to_distance(lo: u8, mid: u8, hi: u8) -> u32 {
     u32::from_le_bytes([lo, mid, hi, 0x00])
 }
 
+pub fn decode_pair(lo: u8, hi: u8) -> u16 {
+    u16::from_le_bytes([lo, hi])
+}
+
 // --- tests ---
 
 #[test]
