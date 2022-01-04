@@ -1,5 +1,6 @@
 #![feature(once_cell)]
 
+use btleplug::api::WriteType::WithoutResponse;
 use btleplug::api::{
     Central, Manager as ApiManager, Peripheral as ApiPeripheral, ScanFilter, Service,
 };
@@ -153,4 +154,33 @@ async fn find_pm5(central: &Adapter) -> Option<Peripheral> {
     }
 
     None
+}
+
+// Sets the sample rate of status notifications.
+// 0 -> 1 hz
+// 1 -> 2 hz (default)
+// 2 -> 4 hz
+// 3 -> 10 hz
+async fn set_sample_rate(pm5: &Peripheral, target: u8) -> Result<(), Box<dyn Error>> {
+    if target > 3 {
+        return Err("Invalid target sample rate".into());
+    }
+
+    let rowing_service = pm5
+        .services()
+        .iter()
+        .find(|s| s.uuid == *ids::services::ROWING)
+        .unwrap()
+        .clone();
+
+    let sample_rate_char = rowing_service
+        .characteristics
+        .iter()
+        .find(|c| c.uuid == *ids::chars::STATUS_SAMPLE_RATE)
+        .unwrap();
+
+    pm5.write(sample_rate_char, &[target], WithoutResponse)
+        .await?;
+
+    Ok(())
 }
