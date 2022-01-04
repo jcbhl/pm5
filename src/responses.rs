@@ -53,12 +53,12 @@ pub struct AdditionalStatus1 {
 
 impl AdditionalStatus1 {
     //FIXME test this
-    pub fn from_bytes(b: &[u8]) -> Result<AdditionalStatus1, Box<dyn Error>> {
+    pub fn from_bytes(b: &[u8]) -> Result<Self, Box<dyn Error>> {
         if b.len() != 17 {
             return Err("Length does not match".into());
         }
 
-        Ok(AdditionalStatus1 {
+        Ok(Self{
             elapsed_time: decode_to_time(b[0], b[1], b[2]),
             speed: decode_pair(b[3], b[4]),
             spm: b[5],
@@ -75,11 +75,11 @@ impl AdditionalStatus1 {
 #[allow(dead_code)]
 struct SampleRate(u8);
 impl SampleRate {
-    pub fn from_bytes(b: &[u8]) -> Result<SampleRate, Box<dyn Error>> {
+    pub fn from_bytes(b: &[u8]) -> Result<Self, Box<dyn Error>> {
         if b.len() != 1 {
             return Err("Length does not match".into());
         }
-        Ok(SampleRate { 0: b[0] })
+        Ok(Self { 0: b[0] })
     }
 }
 

@@ -35,6 +35,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     if let Some(pm5) = find_pm5(&central).await {
         println!("Found pm5!");
+        // TODO test for double connection on cloned object
         pm5.connect().await?;
         println!("Connected.");
         pm5.discover_services().await?;
