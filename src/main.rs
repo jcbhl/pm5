@@ -50,9 +50,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         assert!(services.iter().any(|s| s.uuid == *ids::services::ROWING));
         println!("All required services found.");
 
-        sub_rowing_status(&pm5, &services).await?;
+        // sub_rowing_status(&pm5, &services).await?;
 
-        // sub_force_curve(&pm5, &services).await?;
+        sub_force_curve(&pm5, &services).await?;
 
         pm5.disconnect().await?;
     } else {
@@ -88,15 +88,8 @@ async fn sub_force_curve(
 
         {
             assert!(response.len() >= 2);
-            // little endian response?
-            let num_words = response[0] & 0x0F;
-            let num_characteristics = response[0] >> 2;
-            let sequence_number = response[1];
 
-            print!(
-                "{:?} ({}, {}, {})|||| [",
-                response_time, num_words, num_characteristics, sequence_number
-            );
+            print!("{:?} [", response_time);
             for byte in response {
                 print!("{}, ", byte);
             }
