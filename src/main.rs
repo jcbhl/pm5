@@ -84,10 +84,7 @@ async fn sub_force_curve(
     // let mut full_data = Vec::new();
     let counter = 0u8;
     loop {
-        match pm5
-            .write(forcecurve_char, &[counter], WithoutResponse)
-            .await
-        {
+        match pm5.write(forcecurve_char, &[counter], WithResponse).await {
             Ok(()) => println!("Ok"),
             Err(e) => println!("Found e: {:?}", e),
         };
