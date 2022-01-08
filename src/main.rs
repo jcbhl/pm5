@@ -1,6 +1,6 @@
 #![feature(once_cell)]
 
-use btleplug::api::WriteType::WithoutResponse;
+use btleplug::api::WriteType::{WithResponse, WithoutResponse};
 use btleplug::api::{
     Central, Manager as ApiManager, Peripheral as ApiPeripheral, ScanFilter, Service,
 };
@@ -82,19 +82,21 @@ async fn sub_force_curve(
     println!("Subscription done.");
 
     // let mut full_data = Vec::new();
+    let counter = 0u8;
     loop {
+        pm5.write(forcecurve_char, &[counter], WithoutResponse)
+            .await?;
+        println!("Wrote {}", counter);
+
         let response = pm5.read(forcecurve_char).await?;
-        let response_time = std::time::Instant::now();
 
-        {
-            assert!(response.len() >= 2);
-
-            print!("{:?} [", response_time);
-            for byte in response {
-                print!("{}, ", byte);
-            }
-            println!("]");
+        print!("[");
+        for byte in response.iter() {
+            print!("{:#X},", byte);
         }
+        print!("]");
+
+        // counter = (counter + 1) % 5; // ?
     }
 }
 
